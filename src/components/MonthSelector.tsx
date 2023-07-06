@@ -4,6 +4,8 @@ import styled from 'styled-components';
 const SELECTOR_CONTAINER = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
 `;
 
 const ARROW = styled.span``;
@@ -12,8 +14,23 @@ const MONTH_DISPLAY = styled.div`
   display: flex;
   flex-direction: column;
 `;
-const MONTH = styled.span``;
-const YEAR = styled.span``;
+const MONTH = styled.span`
+  font-family: Work Sans;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0px;
+  text-align: center;
+`;
+const YEAR = styled.span`
+  font-family: Work Sans;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #708797;
+`;
 const monthNames = [
   'January',
   'February',

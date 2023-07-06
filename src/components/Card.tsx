@@ -57,9 +57,9 @@ const DESCRIPTION = styled.span`
 
 const GOAL = styled.div`
   display: grid;
-  grid-template-columns: 1.5fr 1fr;
   width: 480px;
   height: 81px;
+  grid-template-columns: 272px 192px;
   gap: 12px;
 `;
 
@@ -75,6 +75,7 @@ const FORM_TITLE = styled.span`
   letter-spacing: 0em;
   text-align: left;
   color: #1e2a32;
+  margin-bottom: 10px;
 `;
 
 const FORM_INPUT_BOX = styled.div`
