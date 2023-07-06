@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import MonthSelector from './MonthSelector';
 
 const CARD = styled.div`
   margin-top: 30px;
@@ -271,7 +272,9 @@ export function Card(): JSX.Element {
         </FORM>
         <FORM>
           <FORM_TITLE>{`Reach goal by`}</FORM_TITLE>
-          <FORM_INPUT_BOX></FORM_INPUT_BOX>
+          <FORM_INPUT_BOX>
+            <MonthSelector />
+          </FORM_INPUT_BOX>
         </FORM>
       </GOAL>
       <RESULTBOX>
