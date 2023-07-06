@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import MonthSelector from './MonthSelector';
 import { TotalAmountInput } from './TotalAmountInput';
+import { Result } from './Result';
 
 const CARD = styled.div`
   margin-top: 30px;
@@ -13,7 +14,10 @@ const CARD = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  font-family: Work Sans;
+  box-sizing: border-box;
+  padding: 30px 40px 30px 40px;
 `;
 
 const CARD_HEADER = styled.div`
@@ -47,7 +51,6 @@ const TITLE = styled.span`
 
 const DESCRIPTION = styled.span`
   grid-area: description;
-  font-family: Work Sans;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
@@ -94,17 +97,21 @@ export const FORM_INPUT_BOX = styled.div`
   align-items: center;
 `;
 
-const MONTHLY_AMOUNT = styled.div``;
-const RESULT_DESC = styled.div``;
-
-const RESULTBOX = styled.div`
-  border: 1px solid #e9eef2;
-  width: 480px;
-  height: 158px;
-  border-radius: 8px;
+const CONFIRM_BTN = styled.button`
+  width: 320px;
+  height: 56px;
+  padding: 18px 0px 18px 0px;
+  border-radius: 32px;
+  gap: 10px;
+  background: #1b31a8;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0px;
+  text-align: center;
+  border: none;
 `;
-
-const CONFIRM_BTN = styled.button``;
 
 export function Card(): JSX.Element {
   return (
@@ -225,13 +232,8 @@ export function Card(): JSX.Element {
           </FORM_INPUT_BOX>
         </FORM>
       </GOAL>
-      <RESULTBOX>
-        <MONTHLY_AMOUNT>
-          <span>Monthly amount</span>
-          <span>$521</span>
-        </MONTHLY_AMOUNT>
-        <RESULT_DESC>{`You're planning 48 monthly deposits to reach your $25,000 goal by October 2020.`}</RESULT_DESC>
-      </RESULTBOX>
+      <Result />
+
       <CONFIRM_BTN>Confirm</CONFIRM_BTN>
     </CARD>
   );

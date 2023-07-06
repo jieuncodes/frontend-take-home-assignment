@@ -1,5 +1,7 @@
 import { useState, ChangeEvent } from 'react';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { totalAmount } from '../atoms';
 
 const DOLLAR_SIGN = styled.span`
   color: #cbd5dc;
@@ -42,8 +44,8 @@ const FORM_INPUT_BOX_TA = styled.div`
   padding-left: 5px;
 `;
 
-export const TotalAmountInput = (): JSX.Element => {
-  const [amount, setAmount] = useState(0);
+export function TotalAmountInput(): JSX.Element {
+  const [amount, setAmount] = useRecoilState(totalAmount);
 
   const handleAmountChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const amount = Number(e.target.value.replace(/[^0-9]/g, ''));
@@ -89,4 +91,4 @@ export const TotalAmountInput = (): JSX.Element => {
       />
     </FORM_INPUT_BOX_TA>
   );
-};
+}

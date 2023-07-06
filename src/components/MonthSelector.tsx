@@ -46,7 +46,7 @@ const monthNames = [
   'December',
 ];
 
-export function MonthSelector() {
+export function MonthSelector(): JSX.Element {
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   const prevMonth = () => {
@@ -62,6 +62,7 @@ export function MonthSelector() {
         prevMonth.getFullYear(),
         prevMonth.getMonth() - 1
       );
+      setCurrentMonth(newMonth);
       return newMonth;
     });
   };
@@ -70,6 +71,8 @@ export function MonthSelector() {
     setCurrentMonth((prevMonth) => {
       const newMonth = new Date(prevMonth);
       newMonth.setMonth(prevMonth.getMonth() + 1);
+      setCurrentMonth(newMonth);
+
       return newMonth;
     });
   };
