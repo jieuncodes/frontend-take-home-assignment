@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { ChangeEvent } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { totalAmount } from '../atoms';
@@ -81,7 +81,7 @@ export function TotalAmountInput(): JSX.Element {
               <rect width="24" height="24" fill="white" />
             </clipPath>
           </defs>
-        </svg>{' '}
+        </svg>
       </DOLLAR_SIGN>
       <DOLLAR_INPUT
         value={amount.toLocaleString()}

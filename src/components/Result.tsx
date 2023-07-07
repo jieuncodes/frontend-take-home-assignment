@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import { dueDate, totalAmount } from '../atoms';
 import { useRecoilValue } from 'recoil';
 import { useEffect, useState } from 'react';
+import { currencyFormatter } from '../util';
 
 const RESULTBOX = styled.div`
   align-items: center;
@@ -47,41 +48,37 @@ const RESULT_DESC = styled.div`
 export function Result(): JSX.Element {
   const totalAmountState = useRecoilValue(totalAmount);
   const dueDateState = useRecoilValue(dueDate);
+  const [monthLeft, setMonthLeft] = useState(1);
   const [resText, setResText] = useState('');
-  const calculatedMonth = () => {
-    const dueDateObj = new Date(dueDateState);
-    const currentDate = new Date();
-    const yearsDifference =
-      dueDateObj.getFullYear() - currentDate.getFullYear();
-    const monthsDifference = dueDateObj.getMonth() - currentDate.getMonth();
-
-    const totalMonthsDifference = yearsDifference * 12 + monthsDifference;
-
-    return totalMonthsDifference.toString();
-  };
 
   useEffect(() => {
-    console.log('totalAmountState', totalAmountState);
-    console.log('dueDateState', dueDateState);
-    setResText(
-      `You're planning ***${calculatedMonth()} monthly deposits*** to reach your ***${totalAmountState}*** goal by ${dueDateState}.`
-    );
-  }, [totalAmountState, dueDateState]);
+    const getLeftMonth = () => {
+      const dueDateObj = new Date(dueDateState);
+      const currentDate = new Date();
+      const yearsDifference =
+        dueDateObj.getFullYear() - currentDate.getFullYear();
+      const monthsDifference = dueDateObj.getMonth() - currentDate.getMonth();
 
-  const currencyFormatter = (num: number) => {
-    const formatter = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
+      const totalMonthsDifference = yearsDifference * 12 + monthsDifference + 1;
+      setMonthLeft(totalMonthsDifference);
+    };
+    getLeftMonth();
+    const formattedMonth = dueDateState.toLocaleString('en-US', {
+      month: 'long',
     });
-    return formatter.format(num);
-  };
+    setResText(
+      `You're planning ***${monthLeft} monthly deposits*** to reach your ***${currencyFormatter(
+        totalAmountState
+      )}*** goal by ***${formattedMonth}${' ' + dueDateState.getFullYear()}***.`
+    );
+  }, [totalAmountState, dueDateState, monthLeft]);
 
   return (
     <RESULTBOX>
       <MONTHLY_AMOUNT>
         <MONTHLY_AMOUNT_HEADER>Monthly amount</MONTHLY_AMOUNT_HEADER>
         <MONTHLY_AMOUNT_RESULT>
-          {currencyFormatter(532.123)}
+          {currencyFormatter(totalAmountState / monthLeft)}
         </MONTHLY_AMOUNT_RESULT>
       </MONTHLY_AMOUNT>
       <RESULT_DESC>

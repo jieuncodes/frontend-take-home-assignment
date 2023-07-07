@@ -32,20 +32,6 @@ const YEAR = styled.span`
   text-align: center;
   color: #708797;
 `;
-const monthNames = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
 
 export function MonthSelector(): JSX.Element {
   const [due, setDue] = useRecoilState(dueDate);
@@ -66,7 +52,7 @@ export function MonthSelector(): JSX.Element {
     setDue(newMonth);
   };
 
-  const month = `${monthNames[due.getMonth()]}`;
+  const month = `${due.toLocaleString('en-US', { month: 'long' })}`;
   const year = `${due.getFullYear()}`;
 
   return (
