@@ -36,18 +36,18 @@ Once you have opened the link you must sign up and log in so you can have access
 
 The money input component should:
 
-- Allow only numbers
-- Display the value formatted as money (e.g 3500.45 should be 3,500.45)
-- We recommend you name this input as "amount"
+-[x] Allow only numbers
+-[x] Display the value formatted as money (e.g 3500.45 should be 3,500.45)
+-[x] We recommend you name this input as "amount"
 
 #### Date input
 
 The date input component should:
 
-- Allow only future months
-- When clicking on the arrow buttons it should go up and down month by month
-- On focused, the users should be able to move the months by typing the Left and Right arrow key on the keyboard
-- We recommend you name this input as "reachDate"
+-[x] Allow only future months
+-[x] When clicking on the arrow buttons it should go up and down month by month
+-[x] On focused, the users should be able to move the months by typing the Left and Right arrow key on the keyboard
+-[x] We recommend you name this input as "reachDate"
 
 #### Confirm button
 

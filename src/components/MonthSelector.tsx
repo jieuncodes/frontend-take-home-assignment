@@ -1,9 +1,10 @@
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { dueDate } from '../atoms';
+import { reachDate } from '../atoms';
 import { formatMonth } from '../util';
 import { ReactComponent as LeftArrow } from '../assets/icons/left-arrow.svg';
 import { ReactComponent as RightArrow } from '../assets/icons/right-arrow.svg';
+import { ChangeEvent, KeyboardEvent, KeyboardEventHandler } from 'react';
 
 const SELECTOR_CONTAINER = styled.div`
   display: flex;
@@ -38,7 +39,7 @@ const YEAR = styled.span`
 `;
 
 export function MonthSelector(): JSX.Element {
-  const [due, setDue] = useRecoilState(dueDate);
+  const [due, setDue] = useRecoilState(reachDate);
 
   const changeMonth = (offset: number) => {
     if (
@@ -55,8 +56,12 @@ export function MonthSelector(): JSX.Element {
   const month = `${formatMonth(due)}`;
   const year = `${due.getFullYear()}`;
 
+  const handleNavMonth: KeyboardEventHandler<HTMLDivElement> = (event) => {
+    if (event.key === 'ArrowLeft') changeMonth(-1);
+    if (event.key === 'ArrowRight') changeMonth(1);
+  };
   return (
-    <SELECTOR_CONTAINER>
+    <SELECTOR_CONTAINER tabIndex={0} onKeyDown={handleNavMonth}>
       <ARROW_LEFT onClick={() => changeMonth(-1)}></ARROW_LEFT>
       <MONTH_DISPLAY>
         <MONTH>{month}</MONTH>

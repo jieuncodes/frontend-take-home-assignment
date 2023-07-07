@@ -5,8 +5,8 @@ export const totalAmount = atom<number>({
   default: 0,
 });
 
-export const dueDate = atom<Date>({
-  key: 'dueDate',
+export const reachDate = atom<Date>({
+  key: 'reachDate',
   default: new Date(),
 });
 

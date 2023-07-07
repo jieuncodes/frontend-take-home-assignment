@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
-import { dueDate, totalAmount } from '../atoms';
+import { reachDate, totalAmount } from '../atoms';
 import { useRecoilValue } from 'recoil';
 import { useMemo } from 'react';
 import { currencyFormatter, formatMonth } from '../util';
@@ -65,15 +65,15 @@ const BOLD_TEXT = styled.span`
 
 export function Result(): JSX.Element {
   const totalAmountState = useRecoilValue(totalAmount);
-  const dueDateState = useRecoilValue(dueDate);
+  const reachDateState = useRecoilValue(reachDate);
 
   const monthLeft = useMemo(() => {
-    const dueDateObj = new Date(dueDateState);
+    const reachDateObj = new Date(reachDateState);
     const currentDate = new Date();
-    const yearsDiff = dueDateObj.getFullYear() - currentDate.getFullYear();
-    const monthDiff = dueDateObj.getMonth() - currentDate.getMonth();
+    const yearsDiff = reachDateObj.getFullYear() - currentDate.getFullYear();
+    const monthDiff = reachDateObj.getMonth() - currentDate.getMonth();
     return yearsDiff * 12 + monthDiff + 1;
-  }, [dueDateState]);
+  }, [reachDateState]);
 
   const resText = useMemo(() => {
     return (
@@ -84,12 +84,12 @@ export function Result(): JSX.Element {
         <BOLD_TEXT>{currencyFormatter(totalAmountState)}</BOLD_TEXT>
         <NORM_TEXT>goal by</NORM_TEXT>
         <BOLD_TEXT>
-          {formatMonth(dueDateState)}
-          {' ' + dueDateState.getFullYear()}.
+          {formatMonth(reachDateState)}
+          {' ' + reachDateState.getFullYear()}.
         </BOLD_TEXT>
       </>
     );
-  }, [totalAmountState, dueDateState, monthLeft]);
+  }, [totalAmountState, reachDateState, monthLeft]);
 
   return (
     <RESULTBOX>
