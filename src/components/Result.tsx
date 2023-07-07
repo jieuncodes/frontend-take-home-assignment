@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
 import { dueDate, totalAmount } from '../atoms';
 import { useRecoilValue } from 'recoil';
+import { useEffect, useState } from 'react';
 
 const RESULTBOX = styled.div`
   align-items: center;
@@ -46,16 +47,45 @@ const RESULT_DESC = styled.div`
 export function Result(): JSX.Element {
   const totalAmountState = useRecoilValue(totalAmount);
   const dueDateState = useRecoilValue(dueDate);
+  const [resText, setResText] = useState('');
+  const calculatedMonth = () => {
+    const dueDateObj = new Date(dueDateState);
+    const currentDate = new Date();
+    const yearsDifference =
+      dueDateObj.getFullYear() - currentDate.getFullYear();
+    const monthsDifference = dueDateObj.getMonth() - currentDate.getMonth();
 
-  const text = `You're planning ***48 monthly deposits*** to reach your ***${totalAmountState}*** goal by ${dueDateState}.`;
+    const totalMonthsDifference = yearsDifference * 12 + monthsDifference;
+
+    return totalMonthsDifference.toString();
+  };
+
+  useEffect(() => {
+    console.log('totalAmountState', totalAmountState);
+    console.log('dueDateState', dueDateState);
+    setResText(
+      `You're planning ***${calculatedMonth()} monthly deposits*** to reach your ***${totalAmountState}*** goal by ${dueDateState}.`
+    );
+  }, [totalAmountState, dueDateState]);
+
+  const currencyFormatter = (num: number) => {
+    const formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    });
+    return formatter.format(num);
+  };
+
   return (
     <RESULTBOX>
       <MONTHLY_AMOUNT>
         <MONTHLY_AMOUNT_HEADER>Monthly amount</MONTHLY_AMOUNT_HEADER>
-        <MONTHLY_AMOUNT_RESULT>$521</MONTHLY_AMOUNT_RESULT>
+        <MONTHLY_AMOUNT_RESULT>
+          {currencyFormatter(532.123)}
+        </MONTHLY_AMOUNT_RESULT>
       </MONTHLY_AMOUNT>
       <RESULT_DESC>
-        <ReactMarkdown>{text}</ReactMarkdown>
+        <ReactMarkdown>{resText}</ReactMarkdown>
       </RESULT_DESC>
     </RESULTBOX>
   );
