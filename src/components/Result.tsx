@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
 import { dueDate, totalAmount } from '../atoms';
 import { useRecoilValue } from 'recoil';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { currencyFormatter, formatMonth } from '../util';
 
 const RESULTBOX = styled.div`
@@ -48,29 +48,21 @@ const RESULT_DESC = styled.div`
 export function Result(): JSX.Element {
   const totalAmountState = useRecoilValue(totalAmount);
   const dueDateState = useRecoilValue(dueDate);
-  const [monthLeft, setMonthLeft] = useState(1);
-  const [resText, setResText] = useState('');
 
-  useEffect(() => {
-    const getLeftMonth = () => {
-      const dueDateObj = new Date(dueDateState);
-      const currentDate = new Date();
-      const yearsDifference =
-        dueDateObj.getFullYear() - currentDate.getFullYear();
-      const monthsDifference = dueDateObj.getMonth() - currentDate.getMonth();
+  const monthLeft = useMemo(() => {
+    const dueDateObj = new Date(dueDateState);
+    const currentDate = new Date();
+    const yearsDiff = dueDateObj.getFullYear() - currentDate.getFullYear();
+    const monthDiff = dueDateObj.getMonth() - currentDate.getMonth();
+    return yearsDiff * 12 + monthDiff + 1;
+  }, [dueDateState]);
 
-      const totalMonthsDifference = yearsDifference * 12 + monthsDifference + 1;
-      setMonthLeft(totalMonthsDifference);
-    };
-    getLeftMonth();
-
-    setResText(
-      `You're planning **${monthLeft} monthly deposits** to reach your **${currencyFormatter(
-        totalAmountState
-      )}** goal by **${formatMonth(dueDateState)}${
-        ' ' + dueDateState.getFullYear()
-      }**.`
-    );
+  const resText = useMemo(() => {
+    return `You're planning **${monthLeft} monthly deposits** to reach your **${currencyFormatter(
+      totalAmountState
+    )}** goal by **${formatMonth(dueDateState)}${
+      ' ' + dueDateState.getFullYear()
+    }**.`;
   }, [totalAmountState, dueDateState, monthLeft]);
 
   return (
