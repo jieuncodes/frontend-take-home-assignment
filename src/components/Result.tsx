@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
 import { dueDate, totalAmount } from '../atoms';
 import { useRecoilValue } from 'recoil';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { currencyFormatter, formatMonth } from '../util';
 
 const RESULTBOX = styled.div`
@@ -36,13 +36,31 @@ const MONTHLY_AMOUNT_RESULT = styled.span`
   text-align: right;
 `;
 const RESULT_DESC = styled.div`
-  align-items: center;
   background: #f4f8fa;
   height: 100%;
-  padding: 0 30px;
+  padding: 15px 30px;
   width: 100%;
   box-sizing: border-box;
   line-height: 24px;
+`;
+const NORM_TEXT = styled.span`
+  align-items: center;
+  font-family: Work Sans;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0px;
+  text-align: center;
+  margin-right: 0.5rem;
+`;
+const BOLD_TEXT = styled.span`
+  font-family: Work Sans;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0px;
+  text-align: center;
+  margin-right: 0.5rem;
 `;
 
 export function Result(): JSX.Element {
@@ -58,11 +76,19 @@ export function Result(): JSX.Element {
   }, [dueDateState]);
 
   const resText = useMemo(() => {
-    return `You're planning **${monthLeft} monthly deposits** to reach your **${currencyFormatter(
-      totalAmountState
-    )}** goal by **${formatMonth(dueDateState)}${
-      ' ' + dueDateState.getFullYear()
-    }**.`;
+    return (
+      <>
+        <NORM_TEXT>{`You're planning`}</NORM_TEXT>
+        <BOLD_TEXT>{monthLeft} monthly deposits</BOLD_TEXT>
+        <NORM_TEXT>to reach your</NORM_TEXT>
+        <BOLD_TEXT>{currencyFormatter(totalAmountState)}</BOLD_TEXT>
+        <NORM_TEXT>goal by</NORM_TEXT>
+        <BOLD_TEXT>
+          {formatMonth(dueDateState)}
+          {' ' + dueDateState.getFullYear()}.
+        </BOLD_TEXT>
+      </>
+    );
   }, [totalAmountState, dueDateState, monthLeft]);
 
   return (
@@ -73,9 +99,7 @@ export function Result(): JSX.Element {
           {currencyFormatter(totalAmountState / monthLeft)}
         </MONTHLY_AMOUNT_RESULT>
       </MONTHLY_AMOUNT>
-      <RESULT_DESC>
-        <ReactMarkdown>{resText}</ReactMarkdown>
-      </RESULT_DESC>
+      <RESULT_DESC>{resText}</RESULT_DESC>
     </RESULTBOX>
   );
 }
