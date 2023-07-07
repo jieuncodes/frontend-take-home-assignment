@@ -5,3 +5,8 @@ export const currencyFormatter = (num: number) => {
   });
   return formatter.format(num);
 };
+
+export const formatMonth = (date: Date) =>
+  date.toLocaleString('en-US', {
+    month: 'long',
+  });

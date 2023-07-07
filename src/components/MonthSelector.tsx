@@ -1,6 +1,7 @@
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { dueDate } from '../atoms';
+import { formatMonth } from '../util';
 
 const SELECTOR_CONTAINER = styled.div`
   display: flex;
@@ -52,7 +53,7 @@ export function MonthSelector(): JSX.Element {
     setDue(newMonth);
   };
 
-  const month = `${due.toLocaleString('en-US', { month: 'long' })}`;
+  const month = `${formatMonth(due)}`;
   const year = `${due.getFullYear()}`;
 
   return (

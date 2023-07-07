@@ -3,7 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import { dueDate, totalAmount } from '../atoms';
 import { useRecoilValue } from 'recoil';
 import { useEffect, useState } from 'react';
-import { currencyFormatter } from '../util';
+import { currencyFormatter, formatMonth } from '../util';
 
 const RESULTBOX = styled.div`
   align-items: center;
@@ -63,13 +63,13 @@ export function Result(): JSX.Element {
       setMonthLeft(totalMonthsDifference);
     };
     getLeftMonth();
-    const formattedMonth = dueDateState.toLocaleString('en-US', {
-      month: 'long',
-    });
+
     setResText(
       `You're planning ***${monthLeft} monthly deposits*** to reach your ***${currencyFormatter(
         totalAmountState
-      )}*** goal by ***${formattedMonth}${' ' + dueDateState.getFullYear()}***.`
+      )}*** goal by ***${formatMonth(dueDateState)}${
+        ' ' + dueDateState.getFullYear()
+      }***.`
     );
   }, [totalAmountState, dueDateState, monthLeft]);
 

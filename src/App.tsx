@@ -9,7 +9,6 @@ const APP = styled.div`
   display: grid;
   grid-template-rows: 80px auto;
 `;
-
 const NAVBAR = styled.nav`
   height: 80px;
   background-color: white;
@@ -31,7 +30,6 @@ const CONTENTS = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
 const TITLEBOX = styled.div`
   display: flex;
   flex-direction: row;
@@ -41,7 +39,7 @@ const TITLEBOX = styled.div`
   width: 560px;
   min-height: 24px;
   gap: 10px;
-  width: 560px;
+  margin-top: 48px;
 `;
 const NORMTITLE = styled.span`
   align-items: center;
@@ -52,7 +50,6 @@ const NORMTITLE = styled.span`
   letter-spacing: 0px;
   text-align: center;
 `;
-
 const BOLDTITLE = styled.span`
   font-family: Work Sans;
   font-size: 20px;
