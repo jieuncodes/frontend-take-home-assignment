@@ -40,19 +40,15 @@ const YEAR = styled.span`
 export function MonthSelector(): JSX.Element {
   const [due, setDue] = useRecoilState(dueDate);
 
-  const goPrevMonth = () => {
+  const changeMonth = (offset: number) => {
     if (
+      offset === -1 &&
       due.getFullYear() === new Date().getFullYear() &&
       due.getMonth() === new Date().getMonth()
     ) {
       return;
     }
-    const newMonth = new Date(due.getFullYear(), due.getMonth() - 1);
-    setDue(newMonth);
-  };
-
-  const goNextMonth = () => {
-    const newMonth = new Date(due.getFullYear(), due.getMonth() + 1);
+    const newMonth = new Date(due.getFullYear(), due.getMonth() + offset);
     setDue(newMonth);
   };
 
@@ -61,12 +57,12 @@ export function MonthSelector(): JSX.Element {
 
   return (
     <SELECTOR_CONTAINER>
-      <ARROW_LEFT onClick={goPrevMonth}></ARROW_LEFT>
+      <ARROW_LEFT onClick={() => changeMonth(-1)}></ARROW_LEFT>
       <MONTH_DISPLAY>
         <MONTH>{month}</MONTH>
         <YEAR>{year}</YEAR>
       </MONTH_DISPLAY>
-      <ARROW_RIGHT onClick={goNextMonth}></ARROW_RIGHT>
+      <ARROW_RIGHT onClick={() => changeMonth(1)}></ARROW_RIGHT>
     </SELECTOR_CONTAINER>
   );
 }
