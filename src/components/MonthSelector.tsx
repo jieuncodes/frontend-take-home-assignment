@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { dueDate } from '../atoms';
 
 const SELECTOR_CONTAINER = styled.div`
   display: flex;
@@ -47,42 +48,30 @@ const monthNames = [
 ];
 
 export function MonthSelector(): JSX.Element {
-  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [due, setDue] = useRecoilState(dueDate);
 
-  const prevMonth = () => {
-    setCurrentMonth((prevMonth) => {
-      const currentMonth = new Date();
-      if (
-        prevMonth.getFullYear() === currentMonth.getFullYear() &&
-        prevMonth.getMonth() === currentMonth.getMonth()
-      )
-        return prevMonth;
-
-      const newMonth = new Date(
-        prevMonth.getFullYear(),
-        prevMonth.getMonth() - 1
-      );
-      setCurrentMonth(newMonth);
-      return newMonth;
-    });
+  const goPrevMonth = () => {
+    if (
+      due.getFullYear() === new Date().getFullYear() &&
+      due.getMonth() === new Date().getMonth()
+    ) {
+      return;
+    }
+    const newMonth = new Date(due.getFullYear(), due.getMonth() - 1);
+    setDue(newMonth);
   };
 
-  const nextMonth = () => {
-    setCurrentMonth((prevMonth) => {
-      const newMonth = new Date(prevMonth);
-      newMonth.setMonth(prevMonth.getMonth() + 1);
-      setCurrentMonth(newMonth);
-
-      return newMonth;
-    });
+  const goNextMonth = () => {
+    const newMonth = new Date(due.getFullYear(), due.getMonth() + 1);
+    setDue(newMonth);
   };
 
-  const month = `${monthNames[currentMonth.getMonth()]}`;
-  const year = `${currentMonth.getFullYear()}`;
+  const month = `${monthNames[due.getMonth()]}`;
+  const year = `${due.getFullYear()}`;
 
   return (
     <SELECTOR_CONTAINER>
-      <ARROW onClick={prevMonth}>
+      <ARROW onClick={goPrevMonth}>
         <svg
           width="24"
           height="24"
@@ -109,7 +98,7 @@ export function MonthSelector(): JSX.Element {
         <MONTH>{month}</MONTH>
         <YEAR>{year}</YEAR>
       </MONTH_DISPLAY>
-      <ARROW onClick={nextMonth}>
+      <ARROW onClick={goNextMonth}>
         <svg
           width="24"
           height="24"
