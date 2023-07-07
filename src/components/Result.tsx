@@ -65,11 +65,11 @@ export function Result(): JSX.Element {
     getLeftMonth();
 
     setResText(
-      `You're planning ***${monthLeft} monthly deposits*** to reach your ***${currencyFormatter(
+      `You're planning **${monthLeft} monthly deposits** to reach your **${currencyFormatter(
         totalAmountState
-      )}*** goal by ***${formatMonth(dueDateState)}${
+      )}** goal by **${formatMonth(dueDateState)}${
         ' ' + dueDateState.getFullYear()
-      }***.`
+      }**.`
     );
   }, [totalAmountState, dueDateState, monthLeft]);
 
